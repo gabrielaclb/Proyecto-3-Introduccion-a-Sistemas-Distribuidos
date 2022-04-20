@@ -1,0 +1,2 @@
+docker volume create mysql-db-api
+docker run -d -p 33061:3306 --name mysql-db-api  -e MYSQL_ROOT_PASSWORD=secret --mount src=mysql-db-api,dst=/var/lib/mysql mysql

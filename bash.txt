@@ -1,0 +1,37 @@
+docker build -t gabrielaclb/logger ./Logger
+docker rm -f logger
+docker run -d --name logger -p 8002:8002 -p 3005:3005 gabrielaclb/logger
+
+docker build -t gabrielaclb/proxy-bff ./Proxy-BFF
+docker rm -f proxy-bff
+docker run -d --name proxy-bff -p 8000:80 gabrielaclb/proxy-bff
+
+docker build -t gabrielaclb/proxy-services ./Proxy-Services
+docker rm -f proxy-services
+docker run -d --name proxy-services -p 8001:80 gabrielaclb/proxy-services
+
+docker build -t gabrielaclb/bff-desktop ./BFF-Desktop
+docker rm -f bff-desktop
+docker run -d --name bff-desktop -p 3000:3000 gabrielaclb/bff-desktop
+
+docker build -t gabrielaclb/bff-mobile ./BFF-Mobile
+docker rm -f bff-mobile
+docker run -d --name bff-mobile -p 3001:3001 gabrielaclb/bff-mobile
+
+docker build -t gabrielaclb/service-api ./API-Service
+docker rm -f service-api
+docker run -d --name service-api -p 3002:3002 gabrielaclb/service-api
+
+docker build -t gabrielaclb/service-auth ./Auth-Service
+docker rm -f service-auth
+docker run -d --name service-auth -p 3003:3003 gabrielaclb/service-auth
+
+docker volume create mysql-db-api
+docker rm -f mysql-db-api
+docker run -d -p 33061:3306 --name mysql-db-api  -e MYSQL_ROOT_PASSWORD=secret --mount src=mysql-db-api,dst=/var/lib/mysql mysql
+docker exec -i mysql-db-api mysql -uroot -psecret < DB-API/schema.sql
+
+docker volume create mysql-db-auth
+docker rm -f mysql-db-auth
+docker run -d -p 33062:3306 --name mysql-db-auth -e MYSQL_ROOT_PASSWORD=secret --mount src=mysql-db-auth,dst=/var/lib/mysql mysql
+docker exec -i mysql-db-auth mysql -uroot -psecret < DB-Auth/schema.sql
