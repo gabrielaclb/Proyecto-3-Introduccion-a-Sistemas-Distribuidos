@@ -1,5 +1,5 @@
 
-# Proyecto 3. Introduccion a Sistemas Distribuidos 😀
+# Proyecto 3. Introduccion a Sistemas Distribuidos 
 
 Para realizar la instalación, descargar el proyecto, y en la carpeta raiz ejecutar el comando `docker-compose up -d`.
 
