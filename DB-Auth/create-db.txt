@@ -1,3 +1,0 @@
-docker volume create mysql-db-auth
-docker run -d -p 33062:3306 --name mysql-db-auth -e MYSQL_ROOT_PASSWORD=secret --mount src=mysql-db-auth,dst=/var/lib/mysql mysql
-docker exec -i mysql-db-auth mysql -uroot -psecret < schema.sql
